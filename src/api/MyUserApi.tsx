@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 
-const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useGetMyUser = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -11,7 +11,7 @@ export const useGetMyUser = () => {
   const getMyUserRequest = async (): Promise<User> => {
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch(` ${VITE_API_BASE_URL}/api/my/user `, {
+    const response = await fetch(` ${API_BASE_URL}/api/my/user `, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -51,7 +51,7 @@ export const useCreateMyUser = () => {
 
   const createMyUserRequest = async (user: CreateUserRequest) => {
     const accessToken = await getAccessTokenSilently();
-    const response = await fetch(`${VITE_API_BASE_URL}/api/my/user`, {
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -93,7 +93,7 @@ export const useUpdateMyUser = () => {
   const updateMyUserRequest = async (formData: UpdateMyUserRequest) => {
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch(`${VITE_API_BASE_URL}/api/my/user`, {
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
