@@ -11,7 +11,7 @@ export const useGetMyUser = () => {
   const getMyUserRequest = async (): Promise<User> => {
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch(` ${API_BASE_URL}/api/my/user `, {
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -20,8 +20,6 @@ export const useGetMyUser = () => {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Failed to fetch user:", response.status, errorText);
       throw new Error("Failed to fetch user");
     }
 
