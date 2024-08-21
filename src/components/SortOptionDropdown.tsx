@@ -8,10 +8,10 @@ import {
 
 type Props = {
   onChange: (value: string) => void;
-  sortOprion: string;
+  sortOption: string;
 };
 
-const SORT_OPTION = [
+const SORT_OPTIONS = [
   {
     label: "Best match",
     value: "bestMatch",
@@ -26,16 +26,20 @@ const SORT_OPTION = [
   },
 ];
 
-const SortOptionDropdown = ({ onChange, sortOprion }: Props) => {
+const SortOptionDropdown = ({ onChange, sortOption }: Props) => {
+  const selectedSortLabel =
+    SORT_OPTIONS.find((option) => option.value === sortOption)?.label ||
+    SORT_OPTIONS[0].label;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer">
         <Button variant="outline" className="w-full">
-          Sort by: {sortOprion}
+          Sort by: {selectedSortLabel}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {SORT_OPTION.map((option) => (
+        {SORT_OPTIONS.map((option) => (
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => onChange(option.value)}

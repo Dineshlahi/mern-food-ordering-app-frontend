@@ -4,7 +4,7 @@ import PaginationSelector from "@/components/PaginationSelector";
 import SearchBar, { SearchForm } from "@/components/SearchBar";
 import SearchResultCard from "@/components/SearchResultCard";
 import SearchResultInfo from "@/components/SearchResultInfo";
-import SortOptionDropdown from "@/components/SortOptionDriopdown";
+import SortOptionDropdown from "@/components/SortOptionDropdown";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -25,6 +25,7 @@ const SearchPage = () => {
   });
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
   const { results, isLoading } = useSearchRestaurants(searchState, city);
 
   const setSortOption = (sortOption: string) => {
@@ -54,6 +55,7 @@ const SearchPage = () => {
     setSearchState((prevState) => ({
       ...prevState,
       searchQuery: searchFormData.searchQuery,
+      page: 1,
     }));
   };
 
@@ -61,11 +63,12 @@ const SearchPage = () => {
     setSearchState((prevState) => ({
       ...prevState,
       searchQuery: "",
+      page: 1,
     }));
   };
 
   if (isLoading) {
-    <span>Loading...</span>;
+    <span>Loading ...</span>;
   }
 
   if (!results?.data || !city) {
@@ -94,7 +97,7 @@ const SearchPage = () => {
         <div className="flex justify-between flex-col gap-3 lg:flex-row">
           <SearchResultInfo total={results.pagination.total} city={city} />
           <SortOptionDropdown
-            sortOprion={searchState.sortOption}
+            sortOption={searchState.sortOption}
             onChange={(value) => setSortOption(value)}
           />
         </div>
@@ -102,7 +105,6 @@ const SearchPage = () => {
         {results.data.map((restaurant) => (
           <SearchResultCard restaurant={restaurant} />
         ))}
-
         <PaginationSelector
           page={results.pagination.page}
           pages={results.pagination.pages}
